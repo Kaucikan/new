@@ -10,7 +10,7 @@ import {
   CategoryScale,
   LinearScale,
 } from "chart.js";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap/dist/css/bootstrap.min.css";
 
 ChartJS.register(
   Title,
@@ -29,7 +29,9 @@ function Dashboard() {
   const [expenditure, setExpenditure] = useState(Number(storedData.expenditure) || 0);
   const [age, setAge] = useState(Number(storedData.age) || 0);
   const [pan, setPan] = useState(storedData.pan || "");
-  const [deductions, setDeductions] = useState(storedData.deductions || { section80C: 0, section80D: 0, others: 0 });
+  const [deductions, setDeductions] = useState(
+    storedData.deductions || { section80C: 0, section80D: 0, others: 0 }
+  );
 
   const [taxableIncome, setTaxableIncome] = useState(0);
   const [tax, setTax] = useState(0);
@@ -38,9 +40,9 @@ function Dashboard() {
   useEffect(() => {
     const inc = Number(income);
     const exp = Number(expenditure);
-    const totalDeductions = 
-      Number(deductions.section80C) + 
-      Number(deductions.section80D) + 
+    const totalDeductions =
+      Number(deductions.section80C) +
+      Number(deductions.section80D) +
       Number(deductions.others);
 
     const taxable = Math.max(0, inc - totalDeductions);
@@ -90,6 +92,7 @@ GST on Expenditure: ₹${gst.toFixed(2)}
         label: "Financial Breakdown",
         data: [income, expenditure, taxableIncome, tax, gst],
         backgroundColor: ["#4CAF50", "#FF9800", "#2196F3", "#F44336", "#9C27B0"],
+        borderRadius: 8,
       },
     ],
   };
@@ -100,47 +103,80 @@ GST on Expenditure: ₹${gst.toFixed(2)}
       {
         data: [income, expenditure, tax, gst],
         backgroundColor: ["#4CAF50", "#FF9800", "#F44336", "#2196F3"],
+        borderWidth: 2,
+        borderColor: "#fff",
       },
     ],
   };
 
   return (
     <div className="container mt-5">
-      <div className="card shadow p-4">
-        <h2 className="text-center mb-4">📊 Tax Report Dashboard</h2>
+      <div
+        className="card shadow-lg border-0 p-4"
+        style={{
+          borderRadius: "20px",
+          background: "linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%)",
+        }}
+      >
+        <h2 className="text-center mb-4 fw-bold text-primary">
+          📊 Tax Report Dashboard
+        </h2>
 
-        <div className="mb-4">
-          <h5>👤 User Details:</h5>
+        {/* User Info */}
+        <div className="mb-4 p-3 rounded shadow-sm" style={{ background: "#f9fafc" }}>
+          <h5 className="text-dark">👤 User Details</h5>
           <p><strong>Name:</strong> {name}</p>
           <p><strong>Age:</strong> {age}</p>
           <p><strong>PAN:</strong> {pan}</p>
-          <p><strong>Deductions:</strong> 80C: ₹{deductions.section80C}, 80D: ₹{deductions.section80D}, Others: ₹{deductions.others}</p>
+          <p>
+            <strong>Deductions:</strong> 80C: ₹{deductions.section80C}, 80D: ₹
+            {deductions.section80D}, Others: ₹{deductions.others}
+          </p>
         </div>
 
-        <div className="mb-4">
-          <h5>💰 Calculated Details:</h5>
+        {/* Tax Info */}
+        <div className="mb-4 p-3 rounded shadow-sm" style={{ background: "#f9fafc" }}>
+          <h5 className="text-dark">💰 Calculated Details</h5>
           <p><strong>Taxable Income:</strong> ₹{taxableIncome.toFixed(2)}</p>
           <p><strong>Income Tax:</strong> ₹{tax.toFixed(2)}</p>
           <p><strong>GST on Expenditure:</strong> ₹{gst.toFixed(2)}</p>
         </div>
 
-        <div className="row mb-3">
-          <div className="col-md-6 d-flex flex-column align-items-center">
-            <h6 className="text-center">Bar Chart</h6>
-            <div style={{ width: "250px", height: "250px" }}>
-              <Bar data={barData} options={{ maintainAspectRatio: false }} />
+        {/* Charts */}
+        <div className="row mb-4">
+          <div className="col-md-6 d-flex flex-column align-items-center mb-3">
+            <h6 className="fw-semibold">📊 Bar Chart</h6>
+            <div
+              className="p-3 rounded shadow-sm"
+              style={{ background: "#fff", width: "100%", maxWidth: "300px" }}
+            >
+              <Bar data={barData} options={{ maintainAspectRatio: false }} height={250} />
             </div>
           </div>
-          <div className="col-md-6 d-flex flex-column align-items-center">
-            <h6 className="text-center">Pie Chart</h6>
-            <div style={{ width: "250px", height: "250px" }}>
-              <Pie data={pieData} options={{ maintainAspectRatio: false }} />
+
+          <div className="col-md-6 d-flex flex-column align-items-center mb-3">
+            <h6 className="fw-semibold">🥧 Pie Chart</h6>
+            <div
+              className="p-3 rounded shadow-sm"
+              style={{ background: "#fff", width: "100%", maxWidth: "300px" }}
+            >
+              <Pie data={pieData} options={{ maintainAspectRatio: false }} height={250} />
             </div>
           </div>
         </div>
 
+        {/* Download Button */}
         <div className="d-grid">
-          <button className="btn btn-primary" onClick={handleDownload}>
+          <button
+            className="btn btn-primary btn-lg fw-semibold shadow"
+            style={{
+              borderRadius: "12px",
+              transition: "0.3s",
+            }}
+            onMouseEnter={(e) => (e.target.style.transform = "scale(1.05)")}
+            onMouseLeave={(e) => (e.target.style.transform = "scale(1)")}
+            onClick={handleDownload}
+          >
             💾 Download Tax Report
           </button>
         </div>
