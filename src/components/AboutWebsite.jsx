@@ -9,7 +9,7 @@ export default function AboutWebsite() {
         {/* Header */}
         <div className="text-center mb-5">
           <h2 className="display-5 fw-bold">
-            About <span style={{ background: "linear-gradient(to right, #7f00ff, #e100ff)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>Our Platform</span>
+            About <span style={{ background: "linear-gradient(to right, #7f00ff, #e100ff)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>Platform</span>
           </h2>
           <p className="text-secondary fs-5">
             Your smart tax dashboard that helps you calculate taxes, manage filings, and stay financially secure with AI-powered insights.
